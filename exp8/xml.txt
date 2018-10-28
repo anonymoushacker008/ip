@@ -1,0 +1,148 @@
+emp.xml
+<?xml version = "1.0" ?>
+<?xml-stylesheet href="emp.xsl" type="text/xsl"?>
+<Employee-Detail>
+<Employee>
+<Emp_Id> 11032 </Emp_Id>
+<Emp_Name> Hari </Emp_Name>
+<Emp_E-mail> harideivasigamani@gmail.com </Emp_E-mail>
+</Employee>
+<Employee>
+<Emp_Id> 11022 </Emp_Id>
+<Emp_Name> Ashok Kumar</Emp_Name>
+<Emp_E-mail> ashokkumar782@gmail.com </Emp_E-mail>
+</Employee>
+<Employee>
+<Emp_Id> 11011 </Emp_Id>
+<Emp_Name> Elavarasan </Emp_Name>
+<Emp_E-mail> ela@pec.in </Emp_E-mail>
+</Employee>
+</Employee-Detail>
+emp.xsl
+<?xml version="1.0" ?>
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+version="1.0">
+<xsl:output method="html" indent="yes"/>
+<xsl:template match="/">
+<html>
+<head>
+<title>XSLT Style Sheet</title>
+</head>
+<body>
+
+WWW.VIDYARTHIPLUS.COM
+
+WWW.VIDYARTHIPLUS.COM V+TEAM
+
+<h1><p align="center">Employee
+
+Details</p></h1>
+
+<xsl:apply-templates/>
+</body>
+</html>
+</xsl:template>
+<xsl:template match="Employee-Detail">
+<table border="2" width="50%" align="center">
+<tr bgcolor="LIGHTBLUE">
+<th>Emp_Id</th>
+<th>Emp_Name</th>
+<th>Emp_E-mail</th>
+</tr>
+<xsl:for-each select="Employee">
+<tr>
+<td><i><xsl:value-of
+
+select="Emp_Id"/></i></td>
+
+<td><xsl:value-of select="Emp_Name"/></td>
+<td><xsl:value-of select="Emp_E-mail"/></td>
+</tr>
+</xsl:for-each>
+</table>
+</xsl:template>
+</xsl:stylesheet>
+-----------------------------------------------
+package samples;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.net.*;
+public class DayTimeApplet extends java.applet.Applet implements ActionListener
+{
+private static final long serialVersionUID = 1L;
+TextField dt = new TextField();
+Label dl = new Label("The Daytime : ",Label.RIGHT);
+Button db = new Button("Get the Time");
+public void init()
+{
+setLayout(new BorderLayout());
+add("West",dl);
+add("Center",dt);
+db.addActionListener(this);
+add("South",db);
+setVisible(true);
+}
+public void actionPerformed(java.awt.event.ActionEvent p1)
+{
+dt.setText(getdate());
+}
+private String getdate()
+{
+String ts="";
+try
+
+WWW.VIDYARTHIPLUS.COM
+
+WWW.VIDYARTHIPLUS.COM V+TEAM
+
+{
+URL url = new
+
+URL("http://localhost:8080/ServletServer/DayTimeServlet;");
+URLConnection con = url.openConnection();
+con.setUseCaches(false);
+InputStream in = con.getInputStream();
+BufferedReader result = new BufferedReader(new
+
+InputStreamReader(in));
+
+ts = result.readLine();
+in.close();
+return ts;
+}
+catch(Exception e)
+{
+System.out.println("Error\n"+e);
+}
+return "Security Imposed.. Unable to read the time from the
+
+server";
+}
+}
+DayTimeServlet.java
+package server;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class DayTimeServlet extends HttpServlet
+{
+private static final long serialVersionUID = 1L;
+
+WWW.VIDYARTHIPLUS.COM
+
+WWW.VIDYARTHIPLUS.COM V+TEAM
+public void doGet(HttpServletRequest req, HttpServletResponse res) throws
+ServletException, IOException
+{
+res.setContentType("text/plain");
+PrintWriter out = res.getWriter();
+out.println(new java.util.Date().toString());
+}
+public void doPost(HttpServletRequest req, HttpServletResponse res) throws
+ServletException, IOException
+{
+doGet(req,res);
+}
+}
+OUTPUT
